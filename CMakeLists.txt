@@ -1,4 +1,5 @@
 project (main LANGUAGES CXX CUDA)
 enable_language(CUDA)
-
-add_executable(main main.cu lif.cu lif.cuh)
+include_directories(netgen)
+# add_compile_options(-dc)
+add_executable(main main.cu lif.cu lif.cuh mem.cuh syn.cuh syn.cu)
