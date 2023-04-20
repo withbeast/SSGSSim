@@ -3,6 +3,7 @@
 
 SYNBlock* initSYNData(int num){
     SYNBlock* block=new SYNBlock;
+    block->num=num;
     block->src=new int[num]();
     block->tar=new int[num]();
     block->weight=new real[num]();
@@ -16,9 +17,11 @@ void freeSYNData(SYNBlock* block){
     delete [] block->delay;
     delete block;
 }
-SYNBlock* copy2GPU(SYNBlock* cblock,int num){
+SYNBlock* copySYN2GPU(SYNBlock* cblock){
     SYNBlock* gblock=nullptr;
     SYNBlock* tmp=new SYNBlock;
+    int num=cblock->num;
+    tmp->num=num;
     tmp->src=toGPU(cblock->src,num);
     tmp->tar=toGPU(cblock->tar,num);
     tmp->weight=toGPU(cblock->weight,num);

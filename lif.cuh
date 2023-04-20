@@ -2,19 +2,27 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
 typedef float real;
-struct LIFBlock
+struct NEUBlock
 {
+    int num;
+    ///LIF
     bool *Fired;
-    int *FireCnt;
+    int *Fire_cnt;
+    int *Last_fired;
     real *V_m;
     real *I_exc;
     real *I_inh;
     int *Refrac_state;
-    real* I_buffer_exc;
-    real* I_buffer_inh;
+    real *I_buffer_exc;
+    real *I_buffer_inh;
+    ///泊松
+    int steps;
+    bool* source;
+    real *rand;
+    real *rate;
 };
 
-struct LIFConst
+struct GLIFConst
 {
     real P22;
     real P11exc;
@@ -31,7 +39,7 @@ struct LIFConst
     real I_offset;
     real Refrac_step;
 };
-LIFBlock* initLIFData(int num);
-void freeLIFData(LIFBlock* block);
-LIFBlock* copy2GPU(LIFBlock* cblock,int num);
-void freeGLIF(LIFBlock* gblock);
+NEUBlock *initLIFData(int num,int steps);
+void freeLIFData(NEUBlock *block);
+NEUBlock *copyLIF2GPU(NEUBlock *cblock);
+void freeGLIF(NEUBlock *gblock);

@@ -3,14 +3,13 @@
 //
 #pragma once
 #include "macro.h"
-
 #ifndef SIMPLECPUSIM_MODEL_H
 #define SIMPLECPUSIM_MODEL_H
 struct Population{
     int id;
     int num;
     bool isSource;
-    NeuronType type;
+    LIFConst* consts;
     std::vector<int> neurons;
 };
 struct Projection{
@@ -30,12 +29,12 @@ public:
     Model(){
         indexer=0;
     }
-    Population& createPop(int num,NeuronType type,bool isSource=false){
+    Population& createPop(int num,bool isSource,LIFConst* consts){
         Population *p=new Population();
         p->num=num;
         p->id=indexer++;
         p->isSource=isSource;
-        p->type=type;
+        p->consts=consts;
         pops.push_back(p);
         return *p;
     }

@@ -6,36 +6,11 @@
 #define SIMPLECPUSIM_NETWORK_HPP
 #include "macro.h"
 #include "model.hpp"
-#include "neuron.hpp"
-#include "synapse.hpp"
-
-
-Neuron* createN(NeuronType type,int id,bool isSource){
-    Neuron* n;
-    switch (type)
-    {
-    case NeuronType::LIF:
-        n=new LIFNeuron(id,isSource);
-        /* code */
-        break;
-    case NeuronType::POISSON:
-        n=new PoissonInNeuron(id);
-        break;
-    case NeuronType::LIF2:
-        n=new LIFNeuron2(id,isSource);
-        break;
-    default:
-        n=nullptr;
-        break;
-    }
-    return n;
-}
-
 class Network
 {
 public:
     std::vector<Population* >pops;
-    std::vector<Neuron *> neurons;
+    std::vector<LIFNeuron *> neurons;
     std::vector<Synapse *> synapses;
     int indexer = 0;
     Network(Model* model) {
@@ -57,11 +32,11 @@ public:
     void pushPop(Population* p){
         pops.push_back(p);
     };
-    int pushNeuron(NeuronType type,bool isSource = false)
+    int pushNeuron(bool isSource,LIFConst* consts)
     {
-        auto *n = createN(type,indexer++,isSource);
+        auto *n=new LIFNeuron(indexer++,isSource,consts);
         neurons.push_back(n);
-        return n->getId();
+        return n->id;
     }
     void pushSynapse(int src, int tar, real weight, real delay)
     {
@@ -72,10 +47,10 @@ public:
         syn->delay = delay;
         synapses.push_back(syn);
     }
-    Neuron& operator[](int index){
+    LIFNeuron& operator[](int index){
         return *neurons[index];
     }
-    Neuron* get(int pop,int index){
+    LIFNeuron* get(int pop,int index){
         for(auto p:pops){
             if(p->id==pop){
                 int offset=p->neurons[index];

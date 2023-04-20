@@ -34,7 +34,7 @@ public:
             int num=pop->num;
             net->pushPop(pop);
             for(int j=0;j<num;j++){
-                int id=net->pushNeuron(pop->type,pop->isSource);
+                int id=net->pushNeuron(pop->isSource,pop->consts);
                 pop->neurons.push_back(id);
             }
         }
