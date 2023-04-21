@@ -1,5 +1,8 @@
 #pragma once
 #include <cuda_runtime.h>
+#include <algorithm>
+#include <stdio.h>
+typedef float real;
 
 inline void CheckCall(cudaError_t err, const char *file, int line)
 {

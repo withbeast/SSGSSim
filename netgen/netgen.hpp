@@ -30,7 +30,7 @@ public:
     static Network& genNet(Model* model){
         auto *net=new Network(model);
         for(auto pop : model->pops){
-            int pid=pop->id;
+            // int pid=pop->id;
             int num=pop->num;
             net->pushPop(pop);
             for(int j=0;j<num;j++){

@@ -48,10 +48,10 @@ public:
         DW=dw;
     }
 };
-
 real Config::STEP = 0.001;
 real Config::DT=0.001;
 real Config::DW=0.01;
+
 
 struct LIFConst
 {
