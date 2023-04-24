@@ -43,6 +43,7 @@ void freeGSYN(SYNBlock *gblock)
     gpuFree(tmp->weight);
     gpuFree(tmp->delay);
     gpuFree(gblock);
+    delete tmp;
 }
 /*
 * 使用变量的形式存储不变量
